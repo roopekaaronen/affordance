@@ -6,7 +6,7 @@ The related agent-based model is available at COMSES: https://www.comses.net/cod
 
 You will also find the ABM's ODD protocol at the above link.
 
-The file Affordance.R contains R code for data analysis. The .csv files in this repository are NetLogo output. The R code downloads many of these CSV-documents directly from GitHub, but due to size limits some of them had to be compressed (and thus require downloading).
+The file Analysis.R contains R code for data analysis. The .csv files in this repository are NetLogo output. The R code downloads many of these CSV-documents directly from GitHub, but due to size limits some of them had to be compressed (and thus require downloading).
 
 For any questions, contact me at roope dot kaaronen at helsinki dot fi, or https://roopekaaronen.com.
 
