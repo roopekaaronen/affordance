@@ -1,11 +1,11 @@
 ################################################################
 ##    Roope Kaaronen   // University of Helsinki // IIASA
-##    Date: 9.7.2019
+##    Date: 27.11.2019
 ##    Contact: roope dot kaaronen at helsinki dot fi
 ##    https://roopekaaronen.com
 ##    @roopekaaronen
 ##    GitHub: https://github.com/roopekaaronen
-##    ? ROOPE KAARONEN, 2019
+##    ROOPE KAARONEN, 2019
 ################################################################
 
 ################################################################
@@ -19,7 +19,7 @@
 ################################################################
 ##    Load packages (install first, if necessary)
 ################################################################
-setwd("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/Repository")
+setwd("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/affordance")
 
 library(tidyverse)
 library(nlrx)
@@ -29,6 +29,7 @@ library(plyr)
 library(RColorBrewer)
 library(reshape2)
 library(ggpubr)
+library(gridExtra)
 
 
 ################################################################
@@ -64,9 +65,6 @@ aggB <- datB %>%
 
 theme_update(text = element_text(size=6.5), legend.position="bottom")
 
-## I use the tiff() command to print out high-resolution images to the working directory
-tiff("Figure7B.tiff", units="mm", width=85, height=85, res=300)
-
 ## PLOT AMOUNT OF PRO-ENVIRONMENTAL AFFORDANCES BY PRO-ENVIRONMENTAL BEHAVIORS (WITH SMOOTHED CONDITIONAL MEANS)
 pB <- ggplot(data = aggB) +
   geom_point(aes(pro.amount, pro.behavior, colour="Proenvironmental"), alpha = 0.1, size = 0.3) +
@@ -78,10 +76,10 @@ pB <- ggplot(data = aggB) +
   ggtitle("Environmental behavior as a function of affordances", subtitle = "3030 runs with niche construction") +
   scale_colour_manual(name="Behavior",
                       values=c(Proenvironmental="gray20", Nonenvironmental="firebrick3")) +
-  theme(legend.position="bottom")
+  theme(legend.position="bottom") +
+  guides(colour = guide_legend(override.aes = list(size=2)))
 ## PRINT PLOT
 pB
-dev.off()
 
 
 ## REPEAT PROCEDURES ABOVE FOR DATA WITH NO NICHE CONSTRUCTION
@@ -93,7 +91,6 @@ aggB2 <- datB2 %>%
   group_by(pro.amount)
 
 ## PLOT AMOUNT OF PRO-ENVIRONMENTAL AFFORDANCES BY PRO-ENVIRONMENTAL BEHAVIORS (WITH SMOOTHED CONDITIONAL MEANS)
-tiff("Figure7A.tiff", units="mm", width=85, height=85, res=300)
 
 pB2 <- ggplot(data = aggB2) +
   geom_point(aes(pro.amount, pro.behavior, colour="Proenvironmental"), alpha = 0.1, size = 0.3) +
@@ -104,9 +101,19 @@ pB2 <- ggplot(data = aggB2) +
   ylab("Proportion of environmentally significant behaviors") +
   ggtitle("Environmental behavior as a function of affordances", subtitle = "3030 runs without niche construction") +
   scale_colour_manual(name="Behavior",
-                      values=c(Proenvironmental="gray20", Nonenvironmental="firebrick3"))
+                      values=c(Proenvironmental="gray20", Nonenvironmental="firebrick3")) +
+  guides(colour = guide_legend(override.aes = list(size=2)))
 ## PRINT PLOT
 pB2
+
+# COMBINE THE TWO PLOTS
+## I use the tiff() command followed by dev.off() to print out high-resolution images to the working directory
+
+tiff("Figure3.tiff", units="mm", width=150, height=85, res=300)
+ggarrange(pB, pB2, 
+          labels = c("A", "B"),
+          ncol = 2, nrow = 1,
+          common.legend = TRUE, legend = "bottom")
 dev.off()
 
 ##################################
@@ -167,7 +174,6 @@ means.bias2 <- means.bias2[-c(1),]
 ## PLOT TIME-SERIES DATA OF THE DEVELOPMENT OF PRO-BEHAVIOR OVER TIME
 
 # PLOT OF MEAN PRO-ENVIRONMENTAL BEHAVIOR OVER TIME FOR 50% AFFORDANCE (WITH NICHE CONSTRUCTION)
-tiff("Figure11B.tiff", units="mm", width=85, height=85, res=300)
 
 pn <- ggplot(data=means.neutral) + 
   geom_ribbon(aes(ymin=meanpro-sdpro, ymax=meanpro+sdpro, x=X.step., fill = "band"), alpha = 0.2, fill = "gray20")+
@@ -176,15 +182,13 @@ pn <- ggplot(data=means.neutral) +
   xlab("Step") +
   ylab("Proportion of pro-environmental behaviors") +
   ggtitle("Time-series of pro-environmental behavior", subtitle = 
-           "50% pro-environmental affordances, 300 runs with niche construction") +
+           "50% pro-environmental affordances\n300 runs with niche construction") +
   coord_cartesian(ylim = c(0, 1), xlim =c(0,2000)) 
 
 # Print plot
 pn
-dev.off()
 
 # PLOT OF MEAN PRO-ENVIRONMENTAL BEHAVIOR OVER TIME FOR 50% AFFORDANCE (WITHOUT NICHE CONSTRUCTION)
-tiff("Figure11A.tiff", units="mm", width=85, height=85, res=300)
 
 pn2 <- ggplot(data=means.neutral2) + 
   geom_ribbon(aes(ymin=meanpro-sdpro, ymax=meanpro+sdpro, x=X.step., fill = "band"), alpha = 0.2, fill = "gray20")+
@@ -193,14 +197,19 @@ pn2 <- ggplot(data=means.neutral2) +
   xlab("Step") +
   ylab("Proportion of pro-environmental behaviors") +
   ggtitle("Time-series of pro-environmental behavior", subtitle = 
-            "50% pro-environmental affordances, 300 runs without niche construction") +
+            "50% pro-environmental affordances\n300 runs without niche construction") +
   coord_cartesian(ylim = c(0, 1), xlim =c(0,2000)) 
 
 pn2
+
+# COMBINE AND PRINT PLOTS pn AND pn2
+tiff("Figure7.tiff", units="mm", width=150, height=85, res=300)
+ggarrange(pn, pn2, 
+          labels = c("A", "B"),
+          ncol = 2, nrow = 1)
 dev.off()
 
 # PLOT OF MEAN PRO-ENVIRONMENTAL BEHAVIOR OVER TIME FOR 60% AFFORDANCE (WITH NICHE CONSTRUCTION)
-tiff("Figure12B.tiff", units="mm", width=85, height=85, res=300)
 
 pb <- ggplot() + 
   geom_smooth(data=means.bias, aes(x=X.step., y=meanpro), color = "gray20", se = FALSE, size = 0.5) +
@@ -209,13 +218,12 @@ pb <- ggplot() +
   xlab("Step") +
   ylab("Proportion of pro-environmental behaviors") +
   ggtitle("Time-series of pro-environmental behavior", subtitle = 
-            "60% pro-environmental affordances, 300 runs with niche construction") +
+            "60% pro-environmental affordances\n300 runs with niche construction") +
   coord_cartesian(ylim = c(0.5, 1), xlim =c(0,2000)) 
 
 pb
-dev.off()
+
 # PLOT OF MEAN PRO-ENVIRONMENTAL BEHAVIOR OVER TIME FOR 60% AFFORDANCE (WITHOUT NICHE CONSTRUCTION)
-tiff("Figure12A.tiff", units="mm", width=85, height=85, res=300)
 
 pb2 <- ggplot() + 
   geom_smooth(data=means.bias2, aes(x=X.step., y=meanpro), color = "gray20", se = FALSE, size = 0.5) +
@@ -224,11 +232,18 @@ pb2 <- ggplot() +
   xlab("Step") +
   ylab("Proportion of pro-environmental behaviors") +
   ggtitle("Time-series of pro-environmental behavior", subtitle = 
-            "60% pro-environmental affordances, 300 runs without niche construction") +
+            "60% pro-environmental affordances\n300 runs without niche construction") +
   coord_cartesian(ylim = c(0.5, 1), xlim =c(0,2000)) 
 
 pb2
+
+# COMBINE AND PRINT PLOTS pb and pb2
+tiff("Figure8.tiff", units="mm", width=150, height=85, res=300)
+ggarrange(pb, pb2, 
+          labels = c("A", "B"),
+          ncol = 2, nrow = 1)
 dev.off()
+
 ################################################
 ##    END OF STYLIZED MODEL ANALYSIS
 ################################################
@@ -245,45 +260,41 @@ dev.off()
 dataBC = read.csv("https://raw.githubusercontent.com/roopekaaronen/affordance/master/bikes-cars.csv", stringsAsFactors = FALSE)
 
 # PLOT DRIVING AND CYCLING BEHAVIORS OVER TIME
-tiff("Figure13.tiff", units="mm", width=85, height=85, res=300)
 
 pBC <- ggplot(dataBC) + 
-  geom_line(aes(x=Year, y=Vehicles..thousand., col = "Vehicles"), fill = "gray20", size = 0.5) +
-  geom_line(aes(x=Year, y=Bicycles..thousand., col = "Bicycles"), fill = "firebrick3", size = 0.5) +
+  geom_line(aes(x=Year, y=Vehicles..thousand., col = "Vehicle"), fill = "gray20", size = 0.5) +
+  geom_line(aes(x=Year, y=Bicycles..thousand., col = "Bicycle"), fill = "firebrick3", size = 0.5) +
   xlab("Year") +
   ylab("Amount (thousands)") +
-  ggtitle("Traffic crossing the city center in Copenhagen, 1970-2016") +
+  ggtitle("Traffic crossing the city center in Copenhagen\nReal-world data, 1970-2016") +
   ylim(0, 550) +
   scale_colour_manual(name="Behavior",
-                      values=c(Bicycles="gray20", Vehicles="firebrick3"))
+                      values=c(Bicycle="gray20", Vehicle="firebrick3"))
 
 ## PRINT PLOT
 pBC
-dev.off()
 
 # CREATE DATA FOR DEVELOPMENT OF CYCLE TRACKS IN COPENHAGEN (DATA FROM CITY OF COPENHAGEN)
 cphbike <- c(294, 302, 307, 323, 329, 332, 338, 346, 359, 368, 375, 382)
 cphbike <- data.frame(cphbike)
 cphbike$year <- c(1996, 1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014, 2016, 2018)
 
-## PRINT PLOT
-tiff("Figure14.tiff", units="mm", width=85, height=85, res=300)
-
+# PLOT CYCLE TRACKS
 cphplot <- ggplot(cphbike) +
   geom_point(aes(year, cphbike), size = 0.5) +
   geom_smooth(aes(year, cphbike), size = 0.5, se = FALSE, color = "grey20", method = "lm") +
   xlab("Year") +
   ylab("Cycle tracks (km)") +
-  ggtitle("Kilometres of bicycle tracks in Copenhagen by year")
+  ggtitle("Kilometres of bicycle tracks in Copenhagen\nReal-world data by year")
 cphplot
-dev.off()
+
 ##################################
 ##    COPENHAGEN SIMULATED DATA
 ##################################
 
 # DOWNLOAD FILE FROM https://github.com/roopekaaronen/affordance/blob/master/Copenhagen.timeseries300.csv.zip?raw=true
 # READ DATA
-dataC = read.csv("C:/Users/...", skip = 6, stringsAsFactors = FALSE)
+dataC = read.csv("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/Analysis/CSV/Copenhagen.timeseries300.csv", skip = 6, stringsAsFactors = FALSE)
 
 # TRANSFORM TOTAL NUMBER OF BEHAVIOR INTO PROPORTION
 dataC$pro.behavior <- dataC$pro.behavior/dataC$number.of.agents
@@ -307,7 +318,6 @@ data.means$X.step. <- data.means$X.step. + 1970
 data.means <- data.means[-c(1),]
 
 ## PLOT SIMULATED MEAN PRO-ENVIRONMENTAL AND NON-ENVIRONMENTAL BEHAVIOR OVER TIME WITH +/- 1 SD RIBBON
-tiff("Figure15.tiff", units="mm", width=85, height=85, res=300)
 
 p <- ggplot(data.means) + 
   geom_smooth(aes(y=meanpro, x=X.step., colour="Bicycle"), size = 0.5)+
@@ -316,14 +326,14 @@ p <- ggplot(data.means) +
   geom_ribbon(aes(ymin=meannon-sdnon, ymax=meannon+sdnon, x=X.step., fill = "band"), alpha = 0.2, fill = "firebrick3")+
   ylim(-0.02, 1.02) +
   xlim(1970, 2028) +
-  ggtitle("Pro-environmental and non-environmental behavior over time", subtitle = "(300 runs)") +
+  ggtitle("Pro-environmental and non-environmental behavior\nSimulated time-series (300 runs)") +
   xlab("Year") +
   ylab("Proportion of total agents") +
   geom_vline(xintercept = 2018, linetype = "longdash", colour = "gray20", size = 0.3) +
   scale_colour_manual(name="Behavior",
                       values=c(Bicycle="gray20", Vehicle="firebrick3"))
 p
-dev.off()
+
 # SELECT A SINGLE RUN FROM THE TIME SERIES DATA
 single <- dataC[ which(dataC$X.run.number.==9), 1:8] # RUN NUMBER CAN BE CHANGED TO ANY VALUE BETWEEN 1 AND 300
 
@@ -333,7 +343,7 @@ single$X.step. <- single$X.step. + 1970
 single <- single[-c(1),]
 
 # PLOT THE SINGLE RUN
-tiff("Figure17.tiff", units="mm", width=85, height=85, res=300)
+# tiff("Figure17.tiff", units="mm", width=85, height=85, res=300)
 ps <- ggplot(single) + 
   geom_smooth(aes(y=pro.behavior, x=X.step., colour="Bicycle"), size = 0.5)+
   geom_smooth(aes(y=non.behavior, x=X.step., colour="Vehicle"), size = 0.5)+
@@ -341,7 +351,7 @@ ps <- ggplot(single) +
   geom_line(aes(y=non.behavior, x=X.step., colour="Vehicle"), alpha = 0.5, size = 0.3)+
   ylim(-0.02, 1.02) +
   xlim(1970, 2028) +
-  ggtitle("Pro-environmental and non-environmental behavior over time", subtitle = "Selected single run") +
+  ggtitle("Pro-environmental and non-environmental behavior\nSimulated time-series (selected single run)") +
   xlab("Year") +
   ylab("Proportion of environmental behavior") +
   geom_vline(xintercept = 2018, linetype = "longdash", colour = "gray20", size = 0.3) +
@@ -349,7 +359,21 @@ ps <- ggplot(single) +
                       values=c(Bicycle="gray20", Vehicle="firebrick3"))
 # PRINT PLOT
 ps
+
+
+# COMBINE PLOTS p, pBC AND ps
+
+tiff("Figure9.tiff", units="mm", width=150, height=140, res=300)
+
+ggarrange(pBC, p, ps,
+          labels = c("A", "B", "C"),
+          ncol = 2, nrow = 2,
+          common.legend = TRUE) + 
+  theme(legend.position = "bottom")
+
+
 dev.off()
+
 
 # PLOT PRO-ENVIRONMENTAL AFFORDANCES OVER TIME
 
@@ -358,19 +382,22 @@ data.means$meanaff <- data.means$meanaff/40401 # 40401 IS THE TOTAL AMOUNT OF PA
 data.means$sdaff <- data.means$sdaff/40401
 
 # CREATE GGPLOT
-tiff("Figure16.tiff", units="mm", width=85, height=85, res=300)
 pA <- ggplot(data.means) + 
   geom_smooth(aes(y=meanaff, x=X.step.), color = "grey20", size = 0.5)+
   geom_ribbon(aes(ymin=meanaff-sdaff, ymax=meanaff+sdaff, x=X.step., fill = "band"), alpha = 0.2, fill = "gray20")+
-  ggtitle("Proportion of pro-environmental affordances over time") +
+  ggtitle("Proportion of pro-environmental affordances\nSimulated time-series") +
   xlab("Year") +
   ylab("Proportion of pro-environmental affordances") +
   geom_vline(xintercept = 2018, linetype = "longdash", colour = "gray20", size = 0.3)
 # coord_cartesian(ylim =c(0.5,0.8), xlim =c(1996,2018)) # zoom into the data
 # PRINT PLOT
 pA
-dev.off()
 
+tiff("Figure10.tiff", units="mm", width=150, height=85, res=300)
+ggarrange(cphplot, pA, 
+          labels = c("A", "B"),
+          ncol = 2, nrow = 1)
+dev.off()
 ##################################
 ##    COPENHAGEN BATCH ANALYSIS
 ##################################
@@ -388,7 +415,7 @@ aggTB <- datTB %>%
   group_by(construct.pro)
 
 # PLOT RATE OF PRO-ENVIRONMENTAL NICHE CONSTRUCTION BY ENVIRONMENTAL BEHAVIORS
-tiff("Figure18.tiff", units="mm", width=85, height=85, res=300)
+tiff("Figure11.tiff", units="mm", width=85, height=85, res=300)
 pTB <- ggplot(data = aggTB, aes(x = construct.pro)) +
   geom_point(aes(construct.pro, pro.behavior, colour="Proenvironmental"), alpha = 0.2, size = 0.3) +
   geom_point(aes(construct.pro, non.behavior, colour="Nonenvironmental"), alpha = 0.2, size = 0.3) +
@@ -398,7 +425,9 @@ pTB <- ggplot(data = aggTB, aes(x = construct.pro)) +
   ylab("Proportion of environmentally significant behaviors") +
   ggtitle("Environmental behavior as a function of niche construction", subtitle = "At step 17885 (or year 2018)") +
   scale_colour_manual(name="Behavior",
-                      values=c(Proenvironmental="gray20", Nonenvironmental="firebrick3"))
+                      values=c(Proenvironmental="gray20", Nonenvironmental="firebrick3")) +
+  guides(colour = guide_legend(override.aes = list(size=2)))
+
 # PRINT PLOT
 pTB
 dev.off()
@@ -413,7 +442,7 @@ dev.off()
 ################################################
 
 # SELECT VARIABLES OF INTEREST INTO NEW OBJECT
-mydata <- aggB2 %>% dplyr::select(17, 23)
+mydata <- aggB %>% dplyr::select(17, 23)
 
 # STANDARDIZE DATA
 mydata.stand <- scale(mydata)
@@ -433,11 +462,14 @@ wssplot <- function(data, nc=15, seed=1234){
 wssplot(mydata.stand, nc=6)
 
 ## VISUALISE THE CLUSTERS WITH 95% ELLIPSES
-tiff("Figure8.tiff", units="mm", width=85, height=85, res=300)
+tiff("Figure4.tiff", units="mm", width=95, height=85, res=300)
 
 fviz_cluster(object = k.means.fit, data = mydata.stand, geom = "point", pointsize = 0.3, choose.vars = c("pro.amount", "pro.behavior"), ellipse.type = "norm", ellipse.level
-= 0.95) + theme_bw(base_size = 6) + ggtitle("Clusters of pro-environmental behavior by amount of affordances,
-                               without niche construction")
+= 0.95) + theme_bw(base_size = 6) + 
+ggtitle("Clusters of pro-environmental behavior by amount of affordances", 
+        subtitle = "With niche construction") +
+  xlab("Proportion of pro-environmental affordance") +
+  ylab("Proportion of pro-environmental behavior")
 dev.off()
 
 ################################################
@@ -465,7 +497,7 @@ net <- data.frame(net)
 
 
 # PLOT MANUALLY SELECTED SINGLE MODEL RUN
-tiff("Figure4.tiff", units="mm", width=85, height=85, res=300)
+tiff("Figure12.tiff", units="mm", width=85, height=85, res=300)
 
 degreeplot1 <- ggplot(net, aes(x = net)) +
   geom_histogram(binwidth = 1) +
@@ -481,7 +513,7 @@ degreeplot1
 dev.off()
 
 # PLOT NETWORK STRUCTURE OF ALL 1000 SIMULATIONS (WITH LOG SCALE)
-tiff("Figure5.tiff", units="mm", width=85, height=85, res=300)
+tiff("Figure13.tiff", units="mm", width=85, height=85, res=300)
 
 degreeplot2 <- ggplot(test2, aes(x = test)) +
   geom_histogram(binwidth = 1) +
@@ -498,7 +530,7 @@ degreeplot2
 dev.off()
 
 # PLOT GLOBAL CLUSTERING COEFFICIENT OF ALL 1000 SIMULATIONS
-tiff("Figure6.tiff", units="mm", width=85, height=85, res=300)
+tiff("Figure14.tiff", units="mm", width=85, height=85, res=300)
 
 clustercoeff <- ggplot(dataN, aes(x = dataN$global.clustering.coefficient)) +
   geom_histogram(binwidth = 0.01) +
@@ -588,7 +620,7 @@ g <- ggplot(data = senpop, aes(y = pro.behavior, x = number.of.agents, fill = nu
   raincloud_theme +
   xlab("Number of agents") +
   ylab("Proportion of pro-environmental behavior") +
-  ggtitle("Sensitivity testing for number of agents (output at step 2000)")
+  ggtitle("Sensitivity testing for number of agents\nOutput at step 2000")
 
 g
 
@@ -620,7 +652,7 @@ g2 <- ggplot(data = sennet, aes(y = pro.behavior, x = network.param, fill = netw
   raincloud_theme +
   xlab("Minimun degree of connection") +
   ylab("Proportion of pro-environmental behavior") +
-  ggtitle("Sensitivity testing for network density (output at step 2000)")
+  ggtitle("Sensitivity testing for network density\nOutput at step 2000")
 
 g2
 dev.off()
@@ -648,7 +680,7 @@ g3 <- ggplot(data =sensoc, aes(y = pro.behavior, x = social.learning, fill = soc
   raincloud_theme +
   xlab("Rate of social learning") +
   ylab("Proportion of pro-environmental behavior") +
-  ggtitle("Sensitivity testing for social learning (output at step 2000)")
+  ggtitle("Sensitivity testing for social learning\nOutput at step 2000")
 
 g3
 dev.off()
@@ -676,7 +708,7 @@ g4 <- ggplot(data =senenv, aes(y = pro.behavior, x = pro.amount, fill = pro.amou
   raincloud_theme +
   xlab("Proportion of pro-environmental affordance") +
   ylab("Proportion of pro-environmental behavior") +
-  ggtitle("Sensitivity testing for proportion of affordances", subtitle = "Output at step 2000")
+  ggtitle("Sensitivity testing for proportion of affordances\nOutput at step 2000")
 
 g4
 dev.off()
@@ -704,7 +736,7 @@ g5 <- ggplot(data =sennc, aes(y = pro.behavior, x = construct.pro, fill = constr
   raincloud_theme +
   xlab("Rate of pro-environmental niche construction") +
   ylab("Proportion of pro-environmental behavior") +
-  ggtitle("Sensitivity testing for niche construction (output at step 2000)")
+  ggtitle("Sensitivity testing for niche construction\nOutput at step 2000")
 
 g5
 dev.off()
@@ -732,7 +764,7 @@ g6 <- ggplot(data =senasoc, aes(y = pro.behavior, x = asocial.learning, fill = a
   raincloud_theme +
   xlab("Rate of asocial learning") +
   ylab("Proportion of pro-environmental behavior") +
-  ggtitle("Sensitivity testing for asocial learning (output at step 2000)")
+  ggtitle("Sensitivity testing for asocial learning\nOutput at step 2000")
 
 g6
 dev.off()
@@ -760,7 +792,7 @@ g7 <- ggplot(data =senpro, aes(y = pro.behavior, x = initial.pro, fill = initial
   raincloud_theme +
   xlab("Mean initial personal state") +
   ylab("Proportion of pro-environmental behavior") +
-  ggtitle("Sensitivity testing for personal state (output at step 2000)")
+  ggtitle("Sensitivity testing for personal state\nOutput at step 2000")
 
 g7
 dev.off()
@@ -875,7 +907,7 @@ geom_errorbar(data = results.sum, aes(siminputrow, ymin = min, ymax=  max), widt
 w  
 dev.off()
 # PLOT GLOBAL SENSITIVITY ANALYSIS BY PRO-AMOUNT AND PRO-BEHAVIOR
-tiff("SensitivityTest9.tiff", units="mm", width=85, height=85, res=300)
+tiff("Figure5.tiff", units="mm", width=85, height=85, res=300)
 
 pra <- ggplot(results) + 
   geom_point(aes(y=pro.behavior, x=pro.amount), color = "grey20", alpha = 0.8, size = 0.8)+
@@ -885,7 +917,7 @@ pra <- ggplot(results) +
 pra
 dev.off()
 # PLOT GLOBAL SENSITIVITY ANALYSIS BY INITIAL-PRO AND PRO-BEHAVIOR
-tiff("SensitivityTest10.tiff", units="mm", width=85, height=85, res=300)
+tiff("Figure6.tiff", units="mm", width=85, height=85, res=300)
 
 prba <- ggplot(results) + 
   geom_point(aes(y=pro.behavior, x=initial.pro), color = "grey20", alpha = 0.8, size = 0.8)+
@@ -967,10 +999,10 @@ prf
 
 ################################################################
 ##    Roope Kaaronen   // University of Helsinki // IIASA
-##    Date: 9.7.2019
+##    Date: 27.11.2019
 ##    Contact: roope dot kaaronen at helsinki dot fi
 ##    https://roopekaaronen.com
 ##    @roopekaaronen
 ##    GitHub: https://github.com/roopekaaronen
-##    ? ROOPE KAARONEN, 2019
+##    ROOPE KAARONEN, 2019
 ################################################################
