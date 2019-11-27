@@ -5,19 +5,21 @@
 ##    https://roopekaaronen.com
 ##    @roopekaaronen
 ##    GitHub: https://github.com/roopekaaronen
-##    © ROOPE KAARONEN, 2019
+##    ? ROOPE KAARONEN, 2019
 ################################################################
 
 ################################################################
 ##    NOTES:
-##    This R script includes data-analysis for the NetLogo model
-##    XYZ. The model is available at XYZ.
+##    This R code includes data-analysis for the NetLogo model
+##    AFFORDANCE LANDSCAPE MODEL: CULTURAL EVOLUTION OF 
+##    PRO-ENVIRONMENTAL BEHAVIORS
+##    The model is available at CoMSES.
 ################################################################
 
 ################################################################
 ##    Load packages (install first, if necessary)
 ################################################################
-setwd("C:/Users/...")
+setwd("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/Repository")
 
 library(tidyverse)
 library(nlrx)
@@ -113,7 +115,7 @@ dev.off()
 
 ## DOWNLOAD DATA FROM https://github.com/roopekaaronen/affordance/blob/master/Stylized.timeseries.csv.zip?raw=true
 ## READ DATA
-dataT = read.csv("C:/Users/...", stringsAsFactors = FALSE)
+dataT = read.csv("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/Analysis/CSV/Stylized.timeseries.csv", stringsAsFactors = FALSE)
 
 # CREATE SUBSETS OF DATA
 
@@ -205,7 +207,7 @@ pb <- ggplot() +
   geom_ribbon(data=means.bias, aes(ymin=meanpro-sdpro, ymax=meanpro+sdpro, x=X.step., fill = "band"), alpha = 0.2, fill = "gray20")+
 #  geom_smooth(data=bias, aes(group=X.run.number., x=X.step., y=pro.behavior), color = "gray20", se = FALSE) + # Remove hashtag to view all individual lines.
   xlab("Step") +
-  ylab("Percentage of pro-environmental behaviors") +
+  ylab("Proportion of pro-environmental behaviors") +
   ggtitle("Time-series of pro-environmental behavior", subtitle = 
             "60% pro-environmental affordances, 300 runs with niche construction") +
   coord_cartesian(ylim = c(0.5, 1), xlim =c(0,2000)) 
@@ -220,7 +222,7 @@ pb2 <- ggplot() +
   geom_ribbon(data=means.bias2, aes(ymin=meanpro-sdpro, ymax=meanpro+sdpro, x=X.step., fill = "band"), alpha = 0.2, fill = "gray20")+
   #  geom_smooth(data=bias2, aes(group=X.run.number., x=X.step., y=pro.behavior), color = "gray20", se = FALSE) + # Remove hashtag to view all individual lines.
   xlab("Step") +
-  ylab("Percentage of pro-environmental behaviors") +
+  ylab("Proportion of pro-environmental behaviors") +
   ggtitle("Time-series of pro-environmental behavior", subtitle = 
             "60% pro-environmental affordances, 300 runs without niche construction") +
   coord_cartesian(ylim = c(0.5, 1), xlim =c(0,2000)) 
@@ -970,5 +972,5 @@ prf
 ##    https://roopekaaronen.com
 ##    @roopekaaronen
 ##    GitHub: https://github.com/roopekaaronen
-##    © ROOPE KAARONEN, 2019
+##    ? ROOPE KAARONEN, 2019
 ################################################################
