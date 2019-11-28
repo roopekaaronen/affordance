@@ -266,7 +266,7 @@ pBC <- ggplot(dataBC) +
   geom_line(aes(x=Year, y=Bicycles..thousand., col = "Bicycle"), fill = "firebrick3", size = 0.5) +
   xlab("Year") +
   ylab("Amount (thousands)") +
-  ggtitle("Traffic crossing the city center in Copenhagen\nReal-world data, 1970-2016") +
+  ggtitle("Traffic crossing the city center in Copenhagen\nReal-world data, 1970-2018") +
   ylim(0, 550) +
   scale_colour_manual(name="Behavior",
                       values=c(Bicycle="gray20", Vehicle="firebrick3"))

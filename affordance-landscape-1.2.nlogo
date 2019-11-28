@@ -573,7 +573,7 @@ true
 true
 "" ""
 PENS
-"pro" 1.0 0 -8630108 true "" "plot count patches with [pcolor = violet]"
+"pro" 1.0 0 -8630108 true "" "plot count patches with [pcolor = (violet - 1)]"
 "non" 1.0 0 -13791810 true "" "plot count patches with [pcolor = sky]"
 
 PLOT
