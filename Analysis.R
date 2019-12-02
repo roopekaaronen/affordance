@@ -181,7 +181,7 @@ pn <- ggplot(data=means.neutral) +
 #  geom_smooth(data=neutral, aes(group=X.run.number., x=X.step., y=pro.behavior), se = FALSE, color = "gray20") + # Remove hashtag to view all individual lines.
   xlab("Step") +
   ylab("Proportion of pro-environmental behaviors") +
-  ggtitle("Time-series of pro-environmental behavior", subtitle = 
+  ggtitle("Time series of pro-environmental behavior", subtitle = 
            "50% pro-environmental affordances\n300 runs with niche construction") +
   coord_cartesian(ylim = c(0, 1), xlim =c(0,2000)) 
 
@@ -196,7 +196,7 @@ pn2 <- ggplot(data=means.neutral2) +
 #   geom_smooth(data=neutral2, aes(group=X.run.number., x=X.step., y=pro.behavior), se = FALSE, color = "gray20") + # Remove hashtag to view all individual lines.
   xlab("Step") +
   ylab("Proportion of pro-environmental behaviors") +
-  ggtitle("Time-series of pro-environmental behavior", subtitle = 
+  ggtitle("Time series of pro-environmental behavior", subtitle = 
             "50% pro-environmental affordances\n300 runs without niche construction") +
   coord_cartesian(ylim = c(0, 1), xlim =c(0,2000)) 
 
@@ -217,7 +217,7 @@ pb <- ggplot() +
 #  geom_smooth(data=bias, aes(group=X.run.number., x=X.step., y=pro.behavior), color = "gray20", se = FALSE) + # Remove hashtag to view all individual lines.
   xlab("Step") +
   ylab("Proportion of pro-environmental behaviors") +
-  ggtitle("Time-series of pro-environmental behavior", subtitle = 
+  ggtitle("Time series of pro-environmental behavior", subtitle = 
             "60% pro-environmental affordances\n300 runs with niche construction") +
   coord_cartesian(ylim = c(0.5, 1), xlim =c(0,2000)) 
 
@@ -231,7 +231,7 @@ pb2 <- ggplot() +
   #  geom_smooth(data=bias2, aes(group=X.run.number., x=X.step., y=pro.behavior), color = "gray20", se = FALSE) + # Remove hashtag to view all individual lines.
   xlab("Step") +
   ylab("Proportion of pro-environmental behaviors") +
-  ggtitle("Time-series of pro-environmental behavior", subtitle = 
+  ggtitle("Time series of pro-environmental behavior", subtitle = 
             "60% pro-environmental affordances\n300 runs without niche construction") +
   coord_cartesian(ylim = c(0.5, 1), xlim =c(0,2000)) 
 
@@ -326,7 +326,7 @@ p <- ggplot(data.means) +
   geom_ribbon(aes(ymin=meannon-sdnon, ymax=meannon+sdnon, x=X.step., fill = "band"), alpha = 0.2, fill = "firebrick3")+
   ylim(-0.02, 1.02) +
   xlim(1970, 2028) +
-  ggtitle("Pro-environmental and non-environmental behavior\nSimulated time-series (300 runs)") +
+  ggtitle("Pro-environmental and non-environmental behavior\nSimulated time series (300 runs)") +
   xlab("Year") +
   ylab("Proportion of total agents") +
   geom_vline(xintercept = 2018, linetype = "longdash", colour = "gray20", size = 0.3) +
@@ -351,7 +351,7 @@ ps <- ggplot(single) +
   geom_line(aes(y=non.behavior, x=X.step., colour="Vehicle"), alpha = 0.5, size = 0.3)+
   ylim(-0.02, 1.02) +
   xlim(1970, 2028) +
-  ggtitle("Pro-environmental and non-environmental behavior\nSimulated time-series (selected single run)") +
+  ggtitle("Pro-environmental and non-environmental behavior\nSimulated time series (selected single run)") +
   xlab("Year") +
   ylab("Proportion of environmental behavior") +
   geom_vline(xintercept = 2018, linetype = "longdash", colour = "gray20", size = 0.3) +
@@ -385,7 +385,7 @@ data.means$sdaff <- data.means$sdaff/40401
 pA <- ggplot(data.means) + 
   geom_smooth(aes(y=meanaff, x=X.step.), color = "grey20", size = 0.5)+
   geom_ribbon(aes(ymin=meanaff-sdaff, ymax=meanaff+sdaff, x=X.step., fill = "band"), alpha = 0.2, fill = "gray20")+
-  ggtitle("Proportion of pro-environmental affordances\nSimulated time-series") +
+  ggtitle("Proportion of pro-environmental affordances\nSimulated time series") +
   xlab("Year") +
   ylab("Proportion of pro-environmental affordances") +
   geom_vline(xintercept = 2018, linetype = "longdash", colour = "gray20", size = 0.3)

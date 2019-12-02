@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::;;;;;;;;;;;;;;;;:
 ;;;;;;; AFFORDANCE LANDSCAPE MODEL:                        ;;;
 ;;;;;;; CULTURAL EVOLUTION OF PRO-ENVIRONMENTAL BEHAVIORS  ;;;
-;;;;;;; VERSION 1.2 on Netlogo 6.1.0                       ;;;
+;;;;;;; VERSION 1.1.0 on Netlogo 6.1.0                     ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -16,8 +16,8 @@ turtles-own [
 pro-env ;; The pro-environmental personal state (habits, attitudes, etc.) of the agent.
 non-env ;; The non-environmental (environmentally harmful) personal state of the agent.
 behaved? ;; A binary value (true or false) which indicates whether or not an agent has behaved somehow during the current tick.
-lower-bound
-upper-bound
+lower-bound ;; lower bound for pro-env and non-env
+upper-bound;; upper bound for pro-env and non-env
 ]
 
 patches-own [
