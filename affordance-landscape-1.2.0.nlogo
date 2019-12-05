@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::::::::::;;;;;;;;;;;;;;;;:
 ;;;;;;; AFFORDANCE LANDSCAPE MODEL:                        ;;;
 ;;;;;;; CULTURAL EVOLUTION OF PRO-ENVIRONMENTAL BEHAVIORS  ;;;
-;;;;;;; VERSION 1.1.0 on Netlogo 6.1.0                     ;;;
+;;;;;;; VERSION 1.2.0 on Netlogo 6.1.0                     ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -554,7 +554,7 @@ true
 true
 "" ""
 PENS
-"pro" 1.0 0 -13840069 true "" "plot mean [pro-env] of turtles"
+"pro" 1.0 0 -16777216 true "" "plot mean [pro-env] of turtles"
 "non" 1.0 0 -2674135 true "" "plot mean [non-env] of turtles"
 
 PLOT
@@ -581,7 +581,7 @@ PLOT
 194
 1368
 374
-Number of red & white turtles
+Number of red & black turtles
 NIL
 NIL
 0.0
@@ -592,7 +592,7 @@ true
 true
 "" ""
 PENS
-"white" 1.0 0 -13840069 true "" "plot count turtles with [color = white]"
+"white" 1.0 0 -16777216 true "" "plot count turtles with [color = black]"
 "red" 1.0 0 -2674135 true "" "plot count turtles with [color = red]"
 
 SLIDER
@@ -677,7 +677,7 @@ true
 true
 "" ""
 PENS
-"pro" 1.0 2 -13840069 true "" "plot pro-behavior / number-of-agents"
+"pro" 1.0 2 -16777216 true "" "plot pro-behavior / number-of-agents"
 "non" 1.0 2 -2674135 true "" "plot non-behavior / number-of-agents"
 
 MONITOR
@@ -703,12 +703,15 @@ construct-pro / number-of-agents
 11
 
 @#$#@#$#@
-# AFFORDANCE LANDSCAPE MODEL
+# Cultural Evolution of Sustainable Behaviours: Landscape of Affordances Model (version 1.2.0)
 
-# ODD Protocol 
-The following model description follows the ODD (Overview, Design concepts, Details) protocol for describing agent-based models (Grimm et al. 2006, 2010).
+## ODD Protocol 
+Please refer to CoMSES (https://www.comses.net/codebases/c2feceb8-d9c4-4637-8f27-fda49c7dc4f3/releases/1.2.0/) for an ODD (Overview, Design concepts, Details) protocol which provides a full description of this model.
 
-## 1. Purpose
+## Publication
+For an associated publication (research article), see PsyArXiv: https://psyarxiv.com/w6dpa/
+
+## Summary
 This NetLogo model illustrates the cultural evolution of pro-environmental behaviour patterns. It illustrates how collective behaviour patterns evolve from interactions between agents and agents (in a social network) as well as agents and the affordances within a niche. More specifically, the cultural evolution of behaviour patterns is understood in this model as a product of:
 
 1.	The landscape of affordances (action opportunities) provided by the material environment,
@@ -718,153 +721,6 @@ This NetLogo model illustrates the cultural evolution of pro-environmental behav
 5.	Cultural niche construction, or the modulation of affordances within a niche.
 
 More particularly, the model illustrates how changes in the landscape of affordances (Rietveld and Kiverstein, 2014) can trigger nonlinear changes in collective behaviour patterns. The model also shows how several behavioural cultures can emerge from the same environment and even within the same network.
-
-The model is an elaboration of Kurt Lewin’s (1936) heuristic equation, B = f(P, E), where behaviour (B) is a function (f) of the person (P) and the environment (E). The model introduces several feedback loops (1–5 above) to Lewin’s equation, and thus provides an entry-point into studying the evolution of dynamical and complex behavioural systems over time. The model should be considered an abstract model, since many of its parameters are unspecifiable due to limits to current understanding of human (social) behaviour. However, the model can be tuned to replicate real-world macro patterns, and be used as a sandbox environment to locate tipping points in social systems. In the present manuscript, for example, we use the model to reproduce real-world patterns of bicycle and car use in Copenhagen.
-
-## 2. Entities, state variables, and scales	
-
-The model includes three types of agents: human individuals, represented by mobile circle-shaped agents (or ‘turtles’ in NetLogo lingo), affordances (static patches that occupy grid cells) and links (which connect agents in a social network).
-Individuals: Turtles represent a single human being, located within a broader collective social network and ecological niche. Each individual has two personal states. These personal states correspond to the individual’s probability of engaging with a specific kind of affordance. Affordances are opportunities for action provided by the environment. The two personal states in this model are pro-env and non-env. The former, pro-env, defines the probability of an individual to engage with pro-environmental affordances, and the latter, non-env, defines the probability of an individual to engage with non-environmentally friendly affordances.
-The personal states of individual agents are sampled from a normal distribution with mean values initial-pro (for pro-env) and initial-non (for non-env), and SD 0.15. Owing to the model’s probabilistic representation of human behaviour, the values of pro-env and non-env must be bounded between 0 and 1. More specifically, the model assigns individual boundaries for the pro-env and non-env of each agent. The bounds are sampled from a normal distribution with mean values 0.2 (lower bound) and 0.8 (upper bound), with SD 0.05. This standard deviation is roughly in line with empirical data related to environmental attitudes and self-reported behaviours (Chan, 1996).
-Individuals are coloured based on their personal states. This is purely cosmetic, but it aids in noticing changes in personal states. If pro-env > non-env, the turtle is coloured white. If non-env > pro-env, the turtle is coloured red.
-
-Links: Individual agents are embedded in a social network which is connected by links. The model supports four types of networks: the Klemm-Eguíluz model (highly clustered scale-free network), the  Watts–Strogatz model (small-world network), the Barabási–Albert model (scale-free network with preferential attachment) and the Erdős–Rényi model (random network). All network edges (links) are undirected (bidirectional).
-The default network choice is the Klemm-Eguíluz model (Klemm and Eguíluz, 2001). The Klemm-Eguíluz algorithm generates a network network based on a finite memory of the nodes (turtles), creating a highly clustered and scale-free network. The Klemm-Eguíluz model was chosen since it represents two features we know to characterize social systems: Societies have hubs (the network degree distribution follows a power law distribution, i.e. it has scale-free properties) and societies have highly clustered local communities (social networks have high clustering coefficients) (ibid.). See Klemm and Eguíluz (2001) and Caparrini (2018) for descriptions of how Klemm-Eguíluz model works, as well as Prettejohn et al. (2011, section  3.4) for useful pseudocode. We set the default Klemm-Eguíluz model’s parameter m0 (initial number of agents) to 5 and μ (probability to connect with low degree nodes) to 0.9. See section 3.2.1 for more details and graphs of network structure. 
-
-Patches (environment): Patches represent the action-opportunities, or affordances, within the environment. An affordance is the functional relevance of the environment for an individual. The model has two affordances: One represents an opportunity for pro-environmental behaviour (violet patch) and one represents an opportunity for environmentally harmful behaviour (sky-blue patch). The latter are from here on referred to as non-environmental affordances. The affordances of the environment are therefore binary in this model, even though nothing prevents the addition of more kinds of affordances. Affordance-patches occupy the two-dimensional grid of the model. The grid wraps horizontally and vertically (i.e., it is torus-shaped). The total area of the grid is an arbitrary 201x201 patches.
-
-Scales: The model can be adapted to represent different spatial and temporal scales. One time-step can be understood to either represent one instance of behaviour per agent, or a collection of behaviours. In the abstract version of the model (section 4.1 of the article), the spatial and temporal scales are not specifically defined. In empirical validation (section 4.2 of the article), the spatial area of the model represents the city centre of Copenhagen, with each tick representing one day.
-
-## 3. Process overview and scheduling
-
-### Setup: 
-
-The model begins with a setup phase where the patches, turtles and links are created. Ticks are reset after the setup, so all setup processes occur before the first timestep.
-First, the social network (turtles and links) is created. This will create a number of individuals specified by the parameter number-of-agents. See section 2 of ODD protocol above for details on available network structures.
-
-Second, each agent is assigned two personal states, pro-env and non-env (see section 2 of the ODD protocol above for details).
-
-Third, affordances are created. First, all patches are coloured sky-blue (non-environmental affordances). Subsequently, the proportion of patches designated by the parameter pro-amount are changed into pro-environmental affordances. In practice, therefore, the parameter pro-amount corresponds to the initial proportion of pro-environmental affordances within the total landscape of affordances.
-
-### Go: 
-
-The “Go” procedure is the heart of the model.
-
-First, turtles move in a random forward direction between 45 degrees and 45 degrees left from current heading. In one tick (time-step) turtles will continue moving until they have behaved, i.e. until they have successfully interacted with an affordance (or ‘actualized’ and affordance, Kyttä, 2004).
-
-Second, turtles behave. If the turtle is on a pro-environmental affordance (violet patch), it will interact with it with the probability of P(pro-env). For example, if a turtles’ personal state pro-env is 0.5, it has a 50% chance of interacting with a pro-environmental affordance. This is coded as follows (pseudocode):
-
-if current patch is violet and a random floating number is smaller than pro-env [
-behave ]
-
-Likewise, if the turtle is on a non-environmental affordance (sky-blue patch), it will interact with it with the probability of P(non-env). Again, if a turtles’ personal state non-env is 0.7, it has a 70% chance of interacting with a non-environmental affordance.
-A while-loop ensures that each turtle behaves once every turn. Each turtle owns a binary value, behaved?, which signifies whether it has behaved, or actualized an affordance, during the current tick. If behaved? is TRUE, the turtle will stop moving and attempting to behave.
-
-Once a turtle behaves successfully, a sequence of procedures launched in the following order.
-
-1.	If the turtle behaved pro-environmentally (i.e., it actualizes a pro-environmental affordance), it will increase its current personal state pro-env by the amount of asocial-learning and decrease its current non-env by the amount of asocial-learning.
-Conversely, if the turtle behaved non-environmentally (i.e., it actualizes a non-environmental affordance), it will increase its current non-env by the amount of asocial-learning and decrease its current pro-env by the amount of asocial-learning.
-
-2.	If niche-construction is TRUE (niche construction is turned on) and if the turtle behaved pro-environmentally, with probability construct-pro it will ask one of the eight patches in its Moore neighbourhood to set its colour to violet (i.e., turn it into a pro-environmental affordance). construct-pro therefore defines the rate of pro-environmental niche construction. The procedure is identical for non-environmental niche construction (following non-environmental behaviour), whose rate is defined by construct-non.
-
-3.	If networks is TRUE and if the turtle behaved pro-environmentally, it will engage in social learning with its network neighbours (the turtles to which it is directly connected to by a link). Following pro-environmental behaviour, the turtle will ask its network neighbours to increase their current pro-env by the amount specified by parameter social-learning, as well as to decrease their current non-env by the amount specified by parameter social-learning. Again, the procedure is similar after non-environmental behaviour, except this results in an increase of non-env and decrease of pro-env by the amount of social-learning.
-
-4.	The turtle will bound its personal states pro-env and non-env. If the turtles’ personal state is above its upper bound or below its lower bound, it will set its personal state to its upper and lower bound, respectively.
-
-5.	If mutate? Is TRUE, at each tick, the pro-env and non-env of all agents have a chance of mutating. The default probability for mutation (mutate-prob) is 0.005, and the default rate for mutation (mutate-rate) is 0.05. The probabilities for increasing or decreasing pro-env and non-env values (of all agents) are equal, i.e. mutation is not biased to any direction.
-
-The aforementioned steps are sequential: An agent completes the full set of actions before passing on control to the next agent. The order of agents is read in a random order on each tick.
-
- 
-## 4. Design concepts
-
-### Basic principles.
-
-The model design elaborates on social psychologist Kurt Lewin’s (1931) heuristic equation: B = f(P, E). Here, behaviour (B) is a function (f) of the person (P) and its environment (E).
-The model adds five dimensions of detail into Lewin’s equation.
-1.	The environment affords a variety of opportunities for action, or affordances (E → B).
-2.	Behaviour modulates personal states through processes of habituation and individual learning (B → P).
-3.	Personal states, such as habits and intentions, drive behaviour (P → B).
-4.	Behaviour shapes the environment through processes of niche construction (B → E).
-5.	Feedback loops 1–4 all occur within a social network where behaviour is transmitted via social learning (Bmyself → Pneighbors and Bneighbors → Pmyself).
-These assumptions are elaborated in detail in the manuscript’s sections 2.1 to 2.5.
-The basic principles can be summarized as follows: Through processes of asocial and social learning as well as niche construction, any behaviour at time t will have an effect on the behaviour of an agent and other agents at time t+1. The model therefore presents a dynamical systems approach to the emergence of human behaviour, where the unit of study is a tightly coupled human-environment system – a dynamical system which evolves over time and can behave in nonlinear ways due to positive feedback-loops.
-
-
-### Emergence. 
-
-The model produces a complex and dynamical system which exhibits several kinds of emergent behaviour.
-Firstly, the model displays nonlinearities in the development of behavioural cultures (collective behaviour habits). The behaviour of the turtles in the network can be steady for long periods of time, only to be followed by abrupt phase transitions into new states (this is illustrated in more detail in the manuscript sections 4.1 and 4.2). 
-Second, the model illustrates how two different behavioural cultures can emerge from the same environment, and even in the same social network. This is a macro-level pattern that is known (from studies of cultural evolution) to occur in real-world societies (Mesoudi 2011, p. 13).
-Third, the model has several leverage points. For instance, a small change (e.g., 5%) in the initial composition of affordances in the landscape can have radical effects on the evolution of the behavioural cultures (see section 4.1 of manuscript and Appendix for sensitivity testing). Thus, in a way which is typical to complex emergent systems, the model is sensitive to initial conditions, which makes its evolution difficult to predict at certain parameter ranges.
-Fourth, whilst the model always starts with a random composition of the affordance landscape, this landscape gets more structured over time as individuals construct the niche around them.
-
-### Adaptation. 
-
-Through processes of asocial and social learning, turtles adapt their personal states to their behaviour and to their immediate social environment. Moreover, turtles construct their environment to be more predictable by constructing niches which are in line with past behaviour.
-
-### Objectives. 
-
-Turtles engage in active attempts to behave successfully (actualize an affordance) and to create an environment where past behaviour patterns are increasingly more likely.
-
-
-### Learning. 
-
-The model includes two learning processes, asocial and social learning. Asocial or individual learning occurs after behaviour and affects only the agent who behaved. Asocial learning is thus a product of individual behaviour. Social learning occurs in the social network an agent is embedded in (see section 2 of ODD protocol).
-The rates of asocial and social learning depend on the chosen representation of behaviours and time-units. Realistic rates of asocial and social learning are therefore difficult to specify. However, by studying real-world patterns of, it might be possible to infer reasonably accurate rates of social and asocial learning (see section 4.2 of the manuscript).
-
-### Prediction. 
-
-Agents do not estimate future conditions or consequences of their decisions. However, agents do shape their material and social environment to make their past behaviour more likely in the future.
-
-### Sensing. 
-
-Turtles sense the (colour of the) patch they are currently on as well as their network neighbours and their behaviour. Turtles also sense their physical vicinity, i.e. the patches in their Moore neighbourhood (the 8 patches surrounding the patch they are currently on).
- 
-### Interaction. 
-
-After behaving, turtles interact with their network neighbours. This involves both influencing the network neighbours as well as being influenced by each network neighbour (both defined by the rate of social-learning). Niche construction also influences the behaviour of other agents, and is thus an indirect form of social interaction.
- 
-### Stochasticity. 
-
-The following processes rely on random sampling:
-The initial personal states of turtles are sampled from a normal distribution (see section 2 of ODD protocol above). 
-
-The initial configuration of affordances on the grid is random (the proportion of pro-environmental affordances, however, is fixed by the parameter pro-amount). 
-The movement of turtles on the grid is, effectively, a random walk through the landscape of affordances.
-
-Each instance of behaviour and niche construction makes use of a floating random number generator.
-
-The model supports the use of a fixed random seed for replicability (if random-seed? is TRUE, a random seed can be fixed with the rseed parameter).
- 
-### Collectives. 
-
-Individuals belong to a social network and construct their niche, as defined above. Individuals take part in shaping the collective network and niche which, in turn, shapes their behaviour. 
-
-### Observation. 
-
-Observation generally involves tracking mean or specific values over time. The most relevant variables are the global variables pro-behavior and non-behavior, which track the total amount of pro-environmental and non-environmental behavior during each tick.
-Parameter sweeps are conducted via NetLogo’s native BehaviorSpace tool.
-
-## 5. Initialization
-
-The initialization of the model is allowed to vary among simulations. Since many values, such as the personal states of turtles, are randomly sampled, each model run will differ from the next even when run with the same parameter values.
-
-However, the model supports the use of a fixed random seed for replicability (if random-seed? is TRUE, a random seed can be fixed with the rseed parameter).
-
-The initial state of the model at t = 0 will depend on the parameters initial-pro, initial-non, pro-amount and the network parameters (networks, network-type) as defined above.
-
-In the abstract version of the model, the initial states are arbitrary. The abstract model can be used to study the dynamics and sensitivities of the model’s general structure. 
-
-In empirical validation (section 4.2 of manuscript), the initial states of the model are tuned to reproduce real-world patterns, or the cycling and driving habits of people in central Copenhagen.
-
-## 6. Input data
-
-The model does not use input from external sources such as data files or other models.
-
-## 7. Submodels
-
-The model has no other submodels.
 
 ## CREDITS AND REFERENCES
 
@@ -880,7 +736,7 @@ Commercial licenses are also available. To inquire about commercial licenses, pl
 
 This model was created as part of the projects: Cultural Evolution of Sustainable Behaviours: Pro-Environmental Tipping Points in an Agent-Based Model at the YSSP Programme at IIASA, Vienna. The project gratefully acknowledges the support of the Academy of Finland and IIASA.
 
-Cite as: Kaaronen, R.O. 2019. Affordance landscape model. 
+Cite as: Kaaronen, R.O. 2019. Cultural Evolution of Sustainable Behaviours: Landscape of Affordances Model. 
 @#$#@#$#@
 default
 true

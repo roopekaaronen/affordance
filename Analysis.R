@@ -19,7 +19,7 @@
 ################################################################
 ##    Load packages (install first, if necessary)
 ################################################################
-setwd("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/affordance")
+setwd("C:/Users/...")
 
 library(tidyverse)
 library(nlrx)
@@ -122,7 +122,7 @@ dev.off()
 
 ## DOWNLOAD DATA FROM https://github.com/roopekaaronen/affordance/blob/master/Stylized.timeseries.csv.zip?raw=true
 ## READ DATA
-dataT = read.csv("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/Analysis/CSV/Stylized.timeseries.csv", stringsAsFactors = FALSE)
+dataT = read.csv("C:/Users/.../Stylized.timeseries.csv", stringsAsFactors = FALSE)
 
 # CREATE SUBSETS OF DATA
 
@@ -294,7 +294,7 @@ cphplot
 
 # DOWNLOAD FILE FROM https://github.com/roopekaaronen/affordance/blob/master/Copenhagen.timeseries300.csv.zip?raw=true
 # READ DATA
-dataC = read.csv("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/Analysis/CSV/Copenhagen.timeseries300.csv", skip = 6, stringsAsFactors = FALSE)
+dataC = read.csv("C:/Users/.../Copenhagen.timeseries300.csv", skip = 6, stringsAsFactors = FALSE)
 
 # TRANSFORM TOTAL NUMBER OF BEHAVIOR INTO PROPORTION
 dataC$pro.behavior <- dataC$pro.behavior/dataC$number.of.agents
