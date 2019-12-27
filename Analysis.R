@@ -1,6 +1,6 @@
 ################################################################
 ##    Roope Kaaronen   // University of Helsinki // IIASA
-##    Date: 27.11.2019
+##    Date: 26.12.2019
 ##    Contact: roope dot kaaronen at helsinki dot fi
 ##    https://roopekaaronen.com
 ##    @roopekaaronen
@@ -13,13 +13,14 @@
 ##    This R code includes data-analysis for the NetLogo model
 ##    AFFORDANCE LANDSCAPE MODEL: CULTURAL EVOLUTION OF 
 ##    PRO-ENVIRONMENTAL BEHAVIORS
-##    The model is available at CoMSES.
+##    The model is available at CoMSES: 
+##    https://www.comses.net/codebases/c2feceb8-d9c4-4637-8f27-fda49c7dc4f3/releases/1.2.0/
 ################################################################
 
 ################################################################
 ##    Load packages (install first, if necessary)
 ################################################################
-setwd("C:/Users/...")
+setwd("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/affordance")
 
 library(tidyverse)
 library(nlrx)
@@ -106,23 +107,13 @@ pB2 <- ggplot(data = aggB2) +
 ## PRINT PLOT
 pB2
 
-# COMBINE THE TWO PLOTS
-## I use the tiff() command followed by dev.off() to print out high-resolution images to the working directory
-
-tiff("Figure3.tiff", units="mm", width=150, height=85, res=300)
-ggarrange(pB, pB2, 
-          labels = c("A", "B"),
-          ncol = 2, nrow = 1,
-          common.legend = TRUE, legend = "bottom")
-dev.off()
-
 ##################################
 ##    TIME SERIES of ABSTRACT MODEL
 ##################################
 
 ## DOWNLOAD DATA FROM https://github.com/roopekaaronen/affordance/blob/master/Stylized.timeseries.csv.zip?raw=true
 ## READ DATA
-dataT = read.csv("C:/Users/.../Stylized.timeseries.csv", stringsAsFactors = FALSE)
+dataT = read.csv("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/Analysis/CSV/Stylized.timeseries.csv", stringsAsFactors = FALSE)
 
 # CREATE SUBSETS OF DATA
 
@@ -202,13 +193,6 @@ pn2 <- ggplot(data=means.neutral2) +
 
 pn2
 
-# COMBINE AND PRINT PLOTS pn AND pn2
-tiff("Figure7.tiff", units="mm", width=150, height=85, res=300)
-ggarrange(pn, pn2, 
-          labels = c("A", "B"),
-          ncol = 2, nrow = 1)
-dev.off()
-
 # PLOT OF MEAN PRO-ENVIRONMENTAL BEHAVIOR OVER TIME FOR 60% AFFORDANCE (WITH NICHE CONSTRUCTION)
 
 pb <- ggplot() + 
@@ -237,12 +221,6 @@ pb2 <- ggplot() +
 
 pb2
 
-# COMBINE AND PRINT PLOTS pb and pb2
-tiff("Figure8.tiff", units="mm", width=150, height=85, res=300)
-ggarrange(pb, pb2, 
-          labels = c("A", "B"),
-          ncol = 2, nrow = 1)
-dev.off()
 
 ################################################
 ##    END OF STYLIZED MODEL ANALYSIS
@@ -285,7 +263,7 @@ cphplot <- ggplot(cphbike) +
   geom_smooth(aes(year, cphbike), size = 0.5, se = FALSE, color = "grey20", method = "lm") +
   xlab("Year") +
   ylab("Cycle tracks (km)") +
-  ggtitle("Kilometres of bicycle tracks in Copenhagen\nReal-world data by year")
+  ggtitle("Kilometres of bicycle tracks in Copenhagen\nReal-world data by year (1996-2018)")
 cphplot
 
 ##################################
@@ -294,7 +272,7 @@ cphplot
 
 # DOWNLOAD FILE FROM https://github.com/roopekaaronen/affordance/blob/master/Copenhagen.timeseries300.csv.zip?raw=true
 # READ DATA
-dataC = read.csv("C:/Users/.../Copenhagen.timeseries300.csv", skip = 6, stringsAsFactors = FALSE)
+dataC = read.csv("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/Analysis/CSV//Copenhagen.timeseries300.csv", skip = 6, stringsAsFactors = FALSE)
 
 # TRANSFORM TOTAL NUMBER OF BEHAVIOR INTO PROPORTION
 dataC$pro.behavior <- dataC$pro.behavior/dataC$number.of.agents
@@ -353,26 +331,12 @@ ps <- ggplot(single) +
   xlim(1970, 2028) +
   ggtitle("Pro-environmental and non-environmental behavior\nSimulated time series (selected single run)") +
   xlab("Year") +
-  ylab("Proportion of environmental behavior") +
+  ylab("Proportion of total agents") +
   geom_vline(xintercept = 2018, linetype = "longdash", colour = "gray20", size = 0.3) +
   scale_colour_manual(name="Behavior",
                       values=c(Bicycle="gray20", Vehicle="firebrick3"))
 # PRINT PLOT
 ps
-
-
-# COMBINE PLOTS p, pBC AND ps
-
-tiff("Figure9.tiff", units="mm", width=150, height=140, res=300)
-
-ggarrange(pBC, p, ps,
-          labels = c("A", "B", "C"),
-          ncol = 2, nrow = 2,
-          common.legend = TRUE) + 
-  theme(legend.position = "bottom")
-
-
-dev.off()
 
 
 # PLOT PRO-ENVIRONMENTAL AFFORDANCES OVER TIME
@@ -393,11 +357,6 @@ pA <- ggplot(data.means) +
 # PRINT PLOT
 pA
 
-tiff("Figure10.tiff", units="mm", width=150, height=85, res=300)
-ggarrange(cphplot, pA, 
-          labels = c("A", "B"),
-          ncol = 2, nrow = 1)
-dev.off()
 ##################################
 ##    COPENHAGEN BATCH ANALYSIS
 ##################################
@@ -415,22 +374,20 @@ aggTB <- datTB %>%
   group_by(construct.pro)
 
 # PLOT RATE OF PRO-ENVIRONMENTAL NICHE CONSTRUCTION BY ENVIRONMENTAL BEHAVIORS
-tiff("Figure11.tiff", units="mm", width=85, height=85, res=300)
 pTB <- ggplot(data = aggTB, aes(x = construct.pro)) +
-  geom_point(aes(construct.pro, pro.behavior, colour="Proenvironmental"), alpha = 0.2, size = 0.3) +
-  geom_point(aes(construct.pro, non.behavior, colour="Nonenvironmental"), alpha = 0.2, size = 0.3) +
-  geom_smooth(aes(construct.pro, pro.behavior, colour="Proenvironmental"), se = FALSE, method = "auto", span = 0.9, show.legend = F, colour = "gray20", size = 0.5) +
-  geom_smooth(aes(construct.pro, non.behavior, colour="Nonenvironmental"), se = F, method = "auto", span = 0.9, show.legend = F, colour = "firebrick3", size = 0.5) +
+  geom_point(aes(construct.pro, pro.behavior, colour="Bicycle"), alpha = 0.2, size = 0.3) +
+  geom_point(aes(construct.pro, non.behavior, colour="Vehicle"), alpha = 0.2, size = 0.3) +
+  geom_smooth(aes(construct.pro, pro.behavior, colour="Bicycle"), se = FALSE, method = "auto", span = 0.9, show.legend = F, colour = "gray20", size = 0.5) +
+  geom_smooth(aes(construct.pro, non.behavior, colour="Vehicle"), se = F, method = "auto", span = 0.9, show.legend = F, colour = "firebrick3", size = 0.5) +
   xlab("Rate of pro-environmental niche construction") +
-  ylab("Proportion of environmentally significant behaviors") +
-  ggtitle("Environmental behavior as a function of niche construction", subtitle = "At step 17885 (or year 2018)") +
+  ylab("Proportion of total agents") +
+  ggtitle("Behavior as a function of niche construction", subtitle = "At step 17885 (or year 2018)") +
   scale_colour_manual(name="Behavior",
-                      values=c(Proenvironmental="gray20", Nonenvironmental="firebrick3")) +
+                      values=c(Bicycle="gray20", Vehicle="firebrick3")) +
   guides(colour = guide_legend(override.aes = list(size=2)))
 
 # PRINT PLOT
 pTB
-dev.off()
 ################################################
 ##    END OF COPENHAGEN MODEL ANALYSIS
 ################################################
@@ -462,15 +419,14 @@ wssplot <- function(data, nc=15, seed=1234){
 wssplot(mydata.stand, nc=6)
 
 ## VISUALISE THE CLUSTERS WITH 95% ELLIPSES
-tiff("Figure4.tiff", units="mm", width=95, height=85, res=300)
 
-fviz_cluster(object = k.means.fit, data = mydata.stand, geom = "point", pointsize = 0.3, choose.vars = c("pro.amount", "pro.behavior"), ellipse.type = "norm", ellipse.level
+pCluster <- fviz_cluster(object = k.means.fit, data = mydata.stand, geom = "point", pointsize = 0.3, choose.vars = c("pro.amount", "pro.behavior"), ellipse.type = "norm", ellipse.level
 = 0.95) + theme_bw(base_size = 6) + 
-ggtitle("Clusters of pro-environmental behavior by amount of affordances", 
+ggtitle("Clusters of pro-environmental behavior by proportion of affordances", 
         subtitle = "With niche construction") +
   xlab("Proportion of pro-environmental affordance") +
   ylab("Proportion of pro-environmental behavior")
-dev.off()
+pCluster
 
 ################################################
 ##    END OF CLUSTER ANALYSIS
@@ -497,7 +453,7 @@ net <- data.frame(net)
 
 
 # PLOT MANUALLY SELECTED SINGLE MODEL RUN
-tiff("Figure12.tiff", units="mm", width=85, height=85, res=300)
+tiff("FigureS2.tiff", units="mm", width=85, height=85, res=300)
 
 degreeplot1 <- ggplot(net, aes(x = net)) +
   geom_histogram(binwidth = 1) +
@@ -513,7 +469,7 @@ degreeplot1
 dev.off()
 
 # PLOT NETWORK STRUCTURE OF ALL 1000 SIMULATIONS (WITH LOG SCALE)
-tiff("Figure13.tiff", units="mm", width=85, height=85, res=300)
+tiff("FigureS3.tiff", units="mm", width=85, height=85, res=300)
 
 degreeplot2 <- ggplot(test2, aes(x = test)) +
   geom_histogram(binwidth = 1) +
@@ -530,7 +486,7 @@ degreeplot2
 dev.off()
 
 # PLOT GLOBAL CLUSTERING COEFFICIENT OF ALL 1000 SIMULATIONS
-tiff("Figure14.tiff", units="mm", width=85, height=85, res=300)
+tiff("FigureS4.tiff", units="mm", width=85, height=85, res=300)
 
 clustercoeff <- ggplot(dataN, aes(x = dataN$global.clustering.coefficient)) +
   geom_histogram(binwidth = 0.01) +
@@ -907,7 +863,7 @@ geom_errorbar(data = results.sum, aes(siminputrow, ymin = min, ymax=  max), widt
 w  
 dev.off()
 # PLOT GLOBAL SENSITIVITY ANALYSIS BY PRO-AMOUNT AND PRO-BEHAVIOR
-tiff("Figure5.tiff", units="mm", width=85, height=85, res=300)
+tiff("SensitivityTest9.tiff", units="mm", width=85, height=85, res=300)
 
 pra <- ggplot(results) + 
   geom_point(aes(y=pro.behavior, x=pro.amount), color = "grey20", alpha = 0.8, size = 0.8)+
@@ -917,7 +873,7 @@ pra <- ggplot(results) +
 pra
 dev.off()
 # PLOT GLOBAL SENSITIVITY ANALYSIS BY INITIAL-PRO AND PRO-BEHAVIOR
-tiff("Figure6.tiff", units="mm", width=85, height=85, res=300)
+tiff("SensitivityTest10.tiff", units="mm", width=85, height=85, res=300)
 
 prba <- ggplot(results) + 
   geom_point(aes(y=pro.behavior, x=initial.pro), color = "grey20", alpha = 0.8, size = 0.8)+
@@ -993,6 +949,42 @@ prf
 ##    END OF GLOBAL SENSITIVITY ANALYSIS
 ################################################
 
+# PRINT PLOTS AS TIFF
+## I use the tiff() command followed by dev.off() to print out high-resolution images to the working directory
+
+tiff("Figure2.tiff", units="mm", width=150, height=85, res=300)
+ggarrange(pB, pB2,
+          labels = c("A", "B"),
+          ncol = 2, nrow = 1,
+          common.legend = TRUE, legend = "bottom")
+dev.off()
+
+tiff("Figure3.tiff", units="mm", width=95, height=85, res=300)
+pCluster
+dev.off()
+
+tiff("Figure4.tiff", units="mm", width=150, height=140, res=300)
+ggarrange(pn, pn2, pb, pb2,
+          labels = c("A", "B", "C", "D"),
+          ncol = 2, nrow = 2,
+          common.legend = TRUE) + 
+  theme(legend.position = "bottom")
+dev.off()
+
+
+tiff("Figure5.tiff", units="mm", width=150, height=140, res=300)
+ggarrange(pBC, p, ps, pTB,
+          labels = c("A", "B", "C", "D"),
+          ncol = 2, nrow = 2,
+          common.legend = TRUE) + 
+  theme(legend.position = "bottom")
+dev.off()
+
+tiff("Figure6.tiff", units="mm", width=150, height=85, res=300)
+ggarrange(cphplot, pA, 
+          labels = c("A", "B"),
+          ncol = 2, nrow = 1)
+dev.off()
 ################################################
 ##    THE END!
 ################################################
