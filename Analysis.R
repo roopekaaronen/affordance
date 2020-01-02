@@ -1,6 +1,6 @@
 ################################################################
 ##    Roope Kaaronen   // University of Helsinki // IIASA
-##    Date: 26.12.2019
+##    Date: 02.01.2020
 ##    Contact: roope dot kaaronen at helsinki dot fi
 ##    https://roopekaaronen.com
 ##    @roopekaaronen
@@ -20,7 +20,7 @@
 ################################################################
 ##    Load packages (install first, if necessary)
 ################################################################
-setwd("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/affordance")
+setwd("C:/Users/FILL_HERE")
 
 library(tidyverse)
 library(nlrx)
@@ -73,9 +73,9 @@ pB <- ggplot(data = aggB) +
   geom_point(aes(pro.amount, non.behavior, colour="Nonenvironmental"), alpha = 0.1, size = 0.3) + 
   geom_smooth(aes(pro.amount, non.behavior), se = F, method = "loess", show.legend = FALSE, colour = "firebrick3", size = 0.5, span=0.15) +
   xlab("Proportion of pro-environmental affordance") +
-  ylab("Proportion of environmentally significant behaviors") +
-  ggtitle("Environmental behavior as a function of affordances", subtitle = "3030 runs with niche construction") +
-  scale_colour_manual(name="Behavior",
+  ylab("Proportion of environmentally significant behaviours") +
+  ggtitle("Environmental behaviour as a function of affordances", subtitle = "3030 runs with niche construction") +
+  scale_colour_manual(name="Behaviour",
                       values=c(Proenvironmental="gray20", Nonenvironmental="firebrick3")) +
   theme(legend.position="bottom") +
   guides(colour = guide_legend(override.aes = list(size=2)))
@@ -99,9 +99,9 @@ pB2 <- ggplot(data = aggB2) +
   geom_point(aes(pro.amount, non.behavior, colour="Nonenvironmental"), alpha = 0.1, size = 0.3) + 
   geom_smooth(aes(pro.amount, non.behavior), se = F, method = "loess", show.legend = FALSE, colour = "firebrick3", size = 0.5, span=0.15) +
   xlab("Proportion of pro-environmental affordance") +
-  ylab("Proportion of environmentally significant behaviors") +
-  ggtitle("Environmental behavior as a function of affordances", subtitle = "3030 runs without niche construction") +
-  scale_colour_manual(name="Behavior",
+  ylab("Proportion of environmentally significant behaviours") +
+  ggtitle("Environmental behaviour as a function of affordances", subtitle = "3030 runs without niche construction") +
+  scale_colour_manual(name="Behaviour",
                       values=c(Proenvironmental="gray20", Nonenvironmental="firebrick3")) +
   guides(colour = guide_legend(override.aes = list(size=2)))
 ## PRINT PLOT
@@ -171,8 +171,8 @@ pn <- ggplot(data=means.neutral) +
   geom_smooth(aes(x=X.step., y=meanpro), color = "gray20", se = FALSE, size = 0.5) +
 #  geom_smooth(data=neutral, aes(group=X.run.number., x=X.step., y=pro.behavior), se = FALSE, color = "gray20") + # Remove hashtag to view all individual lines.
   xlab("Step") +
-  ylab("Proportion of pro-environmental behaviors") +
-  ggtitle("Time series of pro-environmental behavior", subtitle = 
+  ylab("Proportion of pro-environmental behaviours") +
+  ggtitle("Time series of pro-environmental behaviour", subtitle = 
            "50% pro-environmental affordances\n300 runs with niche construction") +
   coord_cartesian(ylim = c(0, 1), xlim =c(0,2000)) 
 
@@ -186,8 +186,8 @@ pn2 <- ggplot(data=means.neutral2) +
   geom_smooth(aes(x=X.step., y=meanpro), color = "gray20", se = FALSE, size = 0.5) +
 #   geom_smooth(data=neutral2, aes(group=X.run.number., x=X.step., y=pro.behavior), se = FALSE, color = "gray20") + # Remove hashtag to view all individual lines.
   xlab("Step") +
-  ylab("Proportion of pro-environmental behaviors") +
-  ggtitle("Time series of pro-environmental behavior", subtitle = 
+  ylab("Proportion of pro-environmental behaviours") +
+  ggtitle("Time series of pro-environmental behaviour", subtitle = 
             "50% pro-environmental affordances\n300 runs without niche construction") +
   coord_cartesian(ylim = c(0, 1), xlim =c(0,2000)) 
 
@@ -200,8 +200,8 @@ pb <- ggplot() +
   geom_ribbon(data=means.bias, aes(ymin=meanpro-sdpro, ymax=meanpro+sdpro, x=X.step., fill = "band"), alpha = 0.2, fill = "gray20")+
 #  geom_smooth(data=bias, aes(group=X.run.number., x=X.step., y=pro.behavior), color = "gray20", se = FALSE) + # Remove hashtag to view all individual lines.
   xlab("Step") +
-  ylab("Proportion of pro-environmental behaviors") +
-  ggtitle("Time series of pro-environmental behavior", subtitle = 
+  ylab("Proportion of pro-environmental behaviours") +
+  ggtitle("Time series of pro-environmental behaviour", subtitle = 
             "60% pro-environmental affordances\n300 runs with niche construction") +
   coord_cartesian(ylim = c(0.5, 1), xlim =c(0,2000)) 
 
@@ -214,8 +214,8 @@ pb2 <- ggplot() +
   geom_ribbon(data=means.bias2, aes(ymin=meanpro-sdpro, ymax=meanpro+sdpro, x=X.step., fill = "band"), alpha = 0.2, fill = "gray20")+
   #  geom_smooth(data=bias2, aes(group=X.run.number., x=X.step., y=pro.behavior), color = "gray20", se = FALSE) + # Remove hashtag to view all individual lines.
   xlab("Step") +
-  ylab("Proportion of pro-environmental behaviors") +
-  ggtitle("Time series of pro-environmental behavior", subtitle = 
+  ylab("Proportion of pro-environmental behaviours") +
+  ggtitle("Time series of pro-environmental behaviour", subtitle = 
             "60% pro-environmental affordances\n300 runs without niche construction") +
   coord_cartesian(ylim = c(0.5, 1), xlim =c(0,2000)) 
 
@@ -246,7 +246,7 @@ pBC <- ggplot(dataBC) +
   ylab("Amount (thousands)") +
   ggtitle("Traffic crossing the city center in Copenhagen\nReal-world data, 1970-2018") +
   ylim(0, 550) +
-  scale_colour_manual(name="Behavior",
+  scale_colour_manual(name="Behaviour",
                       values=c(Bicycle="gray20", Vehicle="firebrick3"))
 
 ## PRINT PLOT
@@ -272,7 +272,7 @@ cphplot
 
 # DOWNLOAD FILE FROM https://github.com/roopekaaronen/affordance/blob/master/Copenhagen.timeseries300.csv.zip?raw=true
 # READ DATA
-dataC = read.csv("C:/Users/RoopeOK/Documents/Yliopisto/Affordance model/Analysis/CSV//Copenhagen.timeseries300.csv", skip = 6, stringsAsFactors = FALSE)
+dataC = read.csv("C:/Users/FILL_HERE/Copenhagen.timeseries300.csv", skip = 6, stringsAsFactors = FALSE)
 
 # TRANSFORM TOTAL NUMBER OF BEHAVIOR INTO PROPORTION
 dataC$pro.behavior <- dataC$pro.behavior/dataC$number.of.agents
@@ -304,11 +304,11 @@ p <- ggplot(data.means) +
   geom_ribbon(aes(ymin=meannon-sdnon, ymax=meannon+sdnon, x=X.step., fill = "band"), alpha = 0.2, fill = "firebrick3")+
   ylim(-0.02, 1.02) +
   xlim(1970, 2028) +
-  ggtitle("Pro-environmental and non-environmental behavior\nSimulated time series (300 runs)") +
+  ggtitle("Pro-environmental and non-environmental behaviour\nSimulated time series (300 runs)") +
   xlab("Year") +
   ylab("Proportion of total agents") +
   geom_vline(xintercept = 2018, linetype = "longdash", colour = "gray20", size = 0.3) +
-  scale_colour_manual(name="Behavior",
+  scale_colour_manual(name="Behaviour",
                       values=c(Bicycle="gray20", Vehicle="firebrick3"))
 p
 
@@ -329,11 +329,11 @@ ps <- ggplot(single) +
   geom_line(aes(y=non.behavior, x=X.step., colour="Vehicle"), alpha = 0.5, size = 0.3)+
   ylim(-0.02, 1.02) +
   xlim(1970, 2028) +
-  ggtitle("Pro-environmental and non-environmental behavior\nSimulated time series (selected single run)") +
+  ggtitle("Pro-environmental and non-environmental behaviour\nSimulated time series (selected single run)") +
   xlab("Year") +
   ylab("Proportion of total agents") +
   geom_vline(xintercept = 2018, linetype = "longdash", colour = "gray20", size = 0.3) +
-  scale_colour_manual(name="Behavior",
+  scale_colour_manual(name="Behaviour",
                       values=c(Bicycle="gray20", Vehicle="firebrick3"))
 # PRINT PLOT
 ps
@@ -381,8 +381,8 @@ pTB <- ggplot(data = aggTB, aes(x = construct.pro)) +
   geom_smooth(aes(construct.pro, non.behavior, colour="Vehicle"), se = F, method = "auto", span = 0.9, show.legend = F, colour = "firebrick3", size = 0.5) +
   xlab("Rate of pro-environmental niche construction") +
   ylab("Proportion of total agents") +
-  ggtitle("Behavior as a function of niche construction", subtitle = "At step 17885 (or year 2018)") +
-  scale_colour_manual(name="Behavior",
+  ggtitle("Behaviour as a function of niche construction", subtitle = "At step 17885 (or year 2018)") +
+  scale_colour_manual(name="Behaviour",
                       values=c(Bicycle="gray20", Vehicle="firebrick3")) +
   guides(colour = guide_legend(override.aes = list(size=2)))
 
@@ -422,10 +422,10 @@ wssplot(mydata.stand, nc=6)
 
 pCluster <- fviz_cluster(object = k.means.fit, data = mydata.stand, geom = "point", pointsize = 0.3, choose.vars = c("pro.amount", "pro.behavior"), ellipse.type = "norm", ellipse.level
 = 0.95) + theme_bw(base_size = 6) + 
-ggtitle("Clusters of pro-environmental behavior by proportion of affordances", 
+ggtitle("Clusters of pro-environmental behaviour by proportion of affordances", 
         subtitle = "With niche construction") +
   xlab("Proportion of pro-environmental affordance") +
-  ylab("Proportion of pro-environmental behavior")
+  ylab("Proportion of pro-environmental behaviour")
 pCluster
 
 ################################################
@@ -949,7 +949,7 @@ prf
 ##    END OF GLOBAL SENSITIVITY ANALYSIS
 ################################################
 
-# PRINT PLOTS AS TIFF
+# PRINT PLOTS AS TIFF (300 dpi)
 ## I use the tiff() command followed by dev.off() to print out high-resolution images to the working directory
 
 tiff("Figure2.tiff", units="mm", width=150, height=85, res=300)
